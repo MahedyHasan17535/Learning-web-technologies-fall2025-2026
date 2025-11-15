@@ -1,0 +1,307 @@
+<html>
+
+<head>
+    <title>Person Profile</title>
+</head>
+
+<body>
+    <form onsubmit="return validate()">
+        <table border="1" width="450" cellpadding="5">
+            <tr>
+                <th colspan="3" height="50">PERSON PROFILE</th>
+            </tr>
+            <tr>
+                <td width="100">Name</td>
+                <td width="250"><input type="text" id="name" name="name" size="15" onblur="validateName()"></td>
+                <td width="30"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="email" id="email" name="email" size="20" onblur="validateEmail()"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <input type="radio" name="gender" value="male" onchange="validateGender()"> Male
+                    <input type="radio" name="gender" value="female" onchange="validateGender()"> Female
+                    <input type="radio" name="gender" value="other" onchange="validateGender()"> Other
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Date of Birth</td>
+                <td>
+                    <input type="text" id="day" name="day" size="2" maxlength="2" onblur="validateDOB()"> /
+                    <input type="text" id="month" name="month" size="2" maxlength="2" onblur="validateDOB()"> /
+                    <input type="text" id="year" name="year" size="4" maxlength="4" onblur="validateDOB()">
+                    <small>(dd/mm/yyyy)</small>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Blood Group</td>
+                <td>
+                    <select id="blood_group" name="blood_group" onchange="validateBloodGroup()">
+                        <option value="">Select</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Degree</td>
+                <td>
+                    <input type="checkbox" name="degree" value="SSC" onchange="validateDegree()"> SSC
+                    <input type="checkbox" name="degree" value="HSC" onchange="validateDegree()"> HSC
+                    <input type="checkbox" name="degree" value="BSc" onchange="validateDegree()"> BSc.
+                    <input type="checkbox" name="degree" value="MSc" onchange="validateDegree()"> MSc.
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Photo</td>
+                <td colspan="2">
+                    <input type="file" id="photo" name="photo" accept="image/*" onchange="validatePhoto()">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" height="30">
+                    <p id="error" style="color: red; margin: 5px;"></p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" align="right">
+                    <input type="submit" value="Submit">
+                    <input type="reset" value="Reset">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        function validateName() {
+            let name = document.getElementById('name').value.trim();
+            let error = document.getElementById('error');
+            
+            if (name === "") {
+                error.innerHTML = "Name cannot be empty!";
+                return false;
+            }
+            
+            let firstChar = name.charAt(0).toLowerCase();
+            if (firstChar < 'a' || firstChar > 'z') {
+                error.innerHTML = "Name must start with a letter!";
+                return false;
+            }
+            
+            for (let i = 0; i < name.length; i++) {
+                let char = name.charAt(i).toLowerCase();
+                let isLetter = (char >= 'a' && char <= 'z');
+                let isDot = (char === '.');
+                let isDash = (char === '-');
+                let isSpace = (char === ' ');
+                
+                if (!isLetter && !isDot && !isDash && !isSpace) {
+                    error.innerHTML = "Name can only contain letters, dots, or dashes!";
+                    return false;
+                }
+            }
+            
+            let wordCount = 0;
+            let inWord = false;
+            
+            for (let i = 0; i < name.length; i++) {
+                if (name.charAt(i) === ' ') {
+                    inWord = false;
+                } else {
+                    if (!inWord) {
+                        wordCount++;
+                        inWord = true;
+                    }
+                }
+            }
+            
+            if (wordCount < 2) {
+                error.innerHTML = "Name must contain at least 2 words!";
+                return false;
+            }
+            
+            error.innerHTML = "";
+            return true;
+        }
+
+        function validateEmail() {
+            let email = document.getElementById('email').value.trim();
+            let error = document.getElementById('error');
+            
+            if (email === "") {
+                error.innerHTML = "Email cannot be empty!";
+                return false;
+            }
+            
+            if (email.indexOf('@') === -1) {
+                error.innerHTML = "Email must be valid!";
+                return false;
+            }
+            
+            if (email.indexOf('.') === -1) {
+                error.innerHTML = "Email must be valid!";
+                return false;
+            }
+            
+            if (email.indexOf('@') > email.lastIndexOf('.')) {
+                error.innerHTML = "Email must be valid!";
+                return false;
+            }
+            
+            error.innerHTML = "";
+            return true;
+        }
+
+        function validateGender() {
+            let genders = document.getElementsByName('gender');
+            let error = document.getElementById('error');
+            let genderSelected = false;
+            
+            for (let i = 0; i < genders.length; i++) {
+                if (genders[i].checked) {
+                    genderSelected = true;
+                    break;
+                }
+            }
+            
+            if (!genderSelected) {
+                error.innerHTML = "Please select a gender!";
+                return false;
+            }
+            
+            error.innerHTML = "";
+            return true;
+        }
+
+        function validateDOB() {
+            let day = document.getElementById('day').value.trim();
+            let month = document.getElementById('month').value.trim();
+            let year = document.getElementById('year').value.trim();
+            let error = document.getElementById('error');
+            
+            if (day === "" || month === "" || year === "") {
+                error.innerHTML = "Date of Birth is required!";
+                return false;
+            }
+            
+            let dayNum = Number(day);
+            let monthNum = Number(month);
+            let yearNum = Number(year);
+            
+            if (isNaN(dayNum) || isNaN(monthNum) || isNaN(yearNum)) {
+                error.innerHTML = "Date of Birth must be valid numbers!";
+                return false;
+            }
+            
+            if (dayNum < 1 || dayNum > 31) {
+                error.innerHTML = "Day must be between 1 and 31!";
+                return false;
+            }
+            
+            if (monthNum < 1 || monthNum > 12) {
+                error.innerHTML = "Month must be between 1 and 12!";
+                return false;
+            }
+            
+            if (yearNum < 1900 || yearNum > 2016) {
+                error.innerHTML = "Year must be between 1900 and 2016!";
+                return false;
+            }
+            
+            error.innerHTML = "";
+            return true;
+        }
+
+        function validateBloodGroup() {
+            let bloodGroup = document.getElementById('blood_group').value;
+            let error = document.getElementById('error');
+            
+            if (bloodGroup === "") {
+                error.innerHTML = "Please select a blood group!";
+                return false;
+            }
+            
+            error.innerHTML = "";
+            return true;
+        }
+
+        function validateDegree() {
+            let degrees = document.getElementsByName('degree');
+            let error = document.getElementById('error');
+            let degreeSelected = false;
+            
+            for (let i = 0; i < degrees.length; i++) {
+                if (degrees[i].checked) {
+                    degreeSelected = true;
+                    break;
+                }
+            }
+            
+            if (!degreeSelected) {
+                error.innerHTML = "Please select at least one degree!";
+                return false;
+            }
+            
+            error.innerHTML = "";
+            return true;
+        }
+
+        function validatePhoto() {
+            let photo = document.getElementById('photo');
+            let error = document.getElementById('error');
+            
+            if (photo.value === "") {
+                error.innerHTML = "Please select a photo!";
+                return false;
+            }
+            
+            let fileName = photo.value;
+            let fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+            let allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+            let isValidImage = false;
+            
+            for (let i = 0; i < allowedExtensions.length; i++) {
+                if (fileExtension === allowedExtensions[i]) {
+                    isValidImage = true;
+                    break;
+                }
+            }
+            
+            if (!isValidImage) {
+                error.innerHTML = "Please select a valid image file (jpg, jpeg, png, gif, bmp, webp)!";
+                return false;
+            }
+            
+            error.innerHTML = "";
+            return true;
+        }
+
+        function validate() {
+            let nameValid = validateName();
+            let emailValid = validateEmail();
+            let genderValid = validateGender();
+            let dobValid = validateDOB();
+            let bloodGroupValid = validateBloodGroup();
+            let degreeValid = validateDegree();
+            let photoValid = validatePhoto();
+            
+            return nameValid && emailValid && genderValid && dobValid && bloodGroupValid && degreeValid && photoValid;
+        }
+    </script>
+
+</body>
+
+</html>

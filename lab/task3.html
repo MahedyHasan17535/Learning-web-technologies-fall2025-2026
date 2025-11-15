@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Page</title>
+    </head>
+    <body>
+        <form onsubmit="return validate()">
+     <fieldset style="width: 200px">
+     <legend>Gender</legend>
+     <input type="radio" name="gender" value="Male" onchange="validateGender()">Male
+     <input type="radio" name="gender" value="Female" onchange="validateGender()">Female
+     <input type="radio" name="gender" value="Other" onchange="validateGender()">Other<br>
+     <p id="error"></p><br>
+     </fieldset>
+     <input type="submit" value="submit">
+     </form>
+     <script>
+        function validateGender() {
+            let gender = document.getElementsByName('gender');
+            let error = document.getElementById('error');
+            let selected = false;
+             for(let i=0;i<gender.length;i++) {
+                if(gender[i].checked) {
+                    selected = true;
+                    break;
+                }
+             }
+             if(!selected) {
+                error.innerHTML = "PLEASE SELECT THE GENDER";
+                error.style.color = "red";
+                return false;
+             }
+             error.innerHTML = "";
+             return true;
+        }
+        function validate() {
+            return validateGender();
+        }
+     </script>
+    </body>
+</html>

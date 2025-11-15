@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>Profile Pic</title>
+</head>
+<body>
+
+<form onsubmit="return validatePic()">
+<fieldset style="width: 350px">
+     <legend> Profile Pic</legend>
+
+     <label>UserId :</label>
+     <input type="text" id="uid"><br><br>
+
+     <label>Picture :</label>
+     <input type="file" id="pic"><br><br>
+
+     <p id="error" style="color:red;"></p>
+
+     <input type="submit" value="Submit"><br><br>
+</fieldset>
+</form>
+
+<script>
+function validatePic() {
+    let uid = document.getElementById('uid').value.trim();
+    let pic = document.getElementById('pic').value;
+    let error = document.getElementById('error');
+
+    if (uid === "") {
+        error.innerHTML = "USER NAME CANNOT BE EMPTY";
+        return false;
+    }
+
+    if (pic === "") {
+        error.innerHTML = "PLEASE SELECT A PICTURE";
+        return false;
+    }
+
+    error.innerHTML = "";
+    return true;
+}
+</script>
+
+</body>
+</html>

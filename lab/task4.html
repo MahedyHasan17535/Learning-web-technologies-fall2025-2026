@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Page</title>
+    </head>
+    <body>
+        <form onsubmit="return validate()">
+            <fieldset style="width: 200px">
+                <legend>Date of Birth</legend>
+                <input type="date" id="dob" name="dob" onchange="validateDOB()"><br>
+                <p id="error"></p><br>
+            </fieldset>
+
+            <input type="submit" value="submit">
+        </form>
+
+        <script>
+            function validateDOB() {
+                let dob = document.getElementById('dob').value;
+                let error = document.getElementById('error');
+
+                if (dob === "") {
+                    error.innerHTML = "DATE OF BIRTH CAN NOT BE EMPTY";
+                    error.style.color = "red";
+                    return false;
+                }
+
+                let today = new Date();
+                let selectedDate = new Date(dob);
+
+                if (selectedDate > today) {
+                    error.innerHTML = "DOB CAN NOT BE A FUTURE DATE";
+                    error.style.color = "red";
+                    return false;
+                }
+
+                error.innerHTML = "";
+                return true;
+            }
+
+            function validate() {
+                return validateDOB();
+            }
+        </script>
+    </body>
+</html>

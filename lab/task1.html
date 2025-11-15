@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Page</title>
+    </head>
+    <body>
+        <form onsubmit="return validate()">
+            <label for="username">Name</label><br><br>
+            <input type="text" id="username" name="username" onblur="validateName()"><br><br>
+            <p id="error"></p><br><br>
+            <input type="submit" value="submit">
+        </form>
+        <script>
+            function validateName() {
+                let name = document.getElementById('username').value.trim();
+                let error = document.getElementById('error');
+                if(name === "")
+            {
+                error.innerHTML = "NAME CAN NOT BE EMPTY";
+                error.style.color = "red";
+                return false;
+            }
+            let firstChar = name.charAt(0).toLowerCase();
+            if(firstChar<'a'|| firstChar>'z')
+            {
+                error.innerHTML = "MUST START WITH A LETTER";
+                error.style.color = "red";
+                return false;
+
+            }
+            for(let i=0;i<name.length;i++)
+            {
+                let char = name.charAt(i).toLowerCase();
+                let isLetter = (char >='a' && char <='z');
+                let isDot = (char ==='.');
+                let isDash = (char ==='-');
+                if(!isLetter && !isDot && !isDash )
+            {
+                error.innerHTML = "ONLY LETTERS,DOT,DASH";
+                error.style.color = "red";
+                return false;
+
+            }
+            }
+            let wordCount =0;
+            let inWord= false;
+            for(let i=0;i<name.length;i++)
+            {
+                if(name.charAt(i)===' ')
+            {
+                inWord= false;
+            }
+            else{
+                if(!inWord)
+            {
+                wordCount++;
+                inWord = true;
+            }
+            }
+            }
+            if(wordCount <2) {
+                error.innerHTML = "MUST CONTAIN AT LEAST 2 WORDS";
+                error.style.color = "red";
+                return false;
+            }
+            error.innerHTML= "";
+            return true;
+            }
+            function validate() {
+                return validateName();
+            }
+        </script>
+    </body>
+</html>

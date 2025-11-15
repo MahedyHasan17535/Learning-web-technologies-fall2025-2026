@@ -1,0 +1,50 @@
+<html>
+<head>
+    <title>Blood Group</title>
+</head>
+<body>
+
+<form onsubmit="return validate()">
+<fieldset style="width: 220px">
+<legend>Blood Group</legend>
+
+<select id="bg" onchange="validateBG()">
+    <option value="">Select</option>
+    <option value="A+">A+</option>
+    <option value="A-">A-</option>
+    <option value="B+">B+</option>
+    <option value="B-">B-</option>
+    <option value="O+">O+</option>
+    <option value="O-">O-</option>
+    <option value="AB+">AB+</option>
+    <option value="AB-">AB-</option>
+</select>
+
+<p id="error"></p><br>
+</fieldset>
+
+<input type="submit" value="Submit">
+</form>
+
+<script>
+function validateBG() {
+    let bg = document.getElementById('bg').value;
+    let error = document.getElementById('error');
+
+    if (bg === "") {
+        error.innerHTML = "PLEASE SELECT A BLOOD GROUP";
+        error.style.color = "red";
+        return false;
+    }
+
+    error.innerHTML = "";
+    return true;
+}
+
+function validate() {
+    return validateBG();
+}
+</script>
+
+</body>
+</html>
