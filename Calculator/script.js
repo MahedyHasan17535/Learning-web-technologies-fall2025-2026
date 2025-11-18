@@ -42,9 +42,9 @@ const numButtons = [];
 nums.forEach(n => {
     const btn = document.createElement("button");
     btn.textContent = n;
-    btn.style.width = "40px";
+    btn.style.width = "20%";
     btn.style.height = "40px";
-    btn.style.margin = "2px";
+    btn.style.margin = "5px";
 
     btn.disabled = true;
 
@@ -61,16 +61,16 @@ let operator = null;
 
 const plusBtn = document.createElement("button");
 plusBtn.textContent = "+";
-plusBtn.style.width = "40px";
+plusBtn.style.width = "85px";
 plusBtn.style.height = "40px";
-plusBtn.style.margin = "2px";
+plusBtn.style.margin = "5px";
 plusBtn.disabled = true;
 plusBtn.style.backgroundColor = "green";
 calc.appendChild(plusBtn);
 
 const minusBtn = document.createElement("button");
 minusBtn.textContent = "-";
-minusBtn.style.width = "40px";
+minusBtn.style.width = "50px";
 minusBtn.style.height = "40px";
 minusBtn.style.margin = "2px";
 minusBtn.disabled = true;
@@ -79,7 +79,7 @@ calc.appendChild(minusBtn);
 
 const divBtn = document.createElement("button");
 divBtn.textContent = "/";
-divBtn.style.width = "40px";
+divBtn.style.width = "50px";
 divBtn.style.height = "40px";
 divBtn.style.margin = "2px";
 divBtn.disabled = true;
@@ -88,16 +88,16 @@ calc.appendChild(divBtn);
 
 const multiBtn = document.createElement("button");
 multiBtn.textContent = "*";
-multiBtn.style.width = "40px";
+multiBtn.style.width = "80px";
 multiBtn.style.height = "40px";
-multiBtn.style.margin = "2px";
+multiBtn.style.margin = "3px";
 multiBtn.disabled = true;
-multiBtn.style.backgroundColor = "yellow";
+multiBtn.style.backgroundColor = "skyblue";
 calc.appendChild(multiBtn);
 
 const clearBtn = document.createElement("button");
 clearBtn.textContent = "CLEAR";
-clearBtn.style.width = "70px";
+clearBtn.style.width = "100%";
 clearBtn.style.height = "45px";
 clearBtn.style.margin = "3px";
 clearBtn.disabled = true;
@@ -153,7 +153,18 @@ minusBtn.addEventListener("click", () => {
     operator = "-";
     display.value = "";
 });
-
+divBtn.addEventListener("click", () => {
+    if (!powerOn || display.value === "") return;
+    firstNumber = Number(display.value);
+    operator = "/";
+    display.value = "";
+});
+multiBtn.addEventListener("click", () => {
+    if (!powerOn || display.value === "") return;
+    firstNumber = Number(display.value);
+    operator = "*";
+    display.value = "";
+});
 clearBtn.addEventListener("click", () => {
     if (!powerOn) return;
     display.value = "";
@@ -166,6 +177,9 @@ equalBtn.addEventListener("click", () => {
 
     if (operator === "+") display.value = firstNumber + secondNumber;
     else if(operator === "-") display.value = firstNumber - secondNumber;
+    else if (operator === "*") display.value = firstNumber * secondNumber;
+    else if (operator === "/") display.value = (secondNumber === 0) ? "Err" : firstNumber / secondNumber;
+    operator = null;
 });
 
 
