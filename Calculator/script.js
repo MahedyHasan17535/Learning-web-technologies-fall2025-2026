@@ -111,3 +111,50 @@ equalBtn.style.margin = "5px 0";
 equalBtn.disabled = true;
 calc.appendChild(equalBtn);
 
+onBtn.addEventListener("click", () => {
+    powerOn = true;
+    display.disabled = false;
+
+    numButtons.forEach(b => b.disabled = false);
+    plusBtn.disabled = false;
+    minusBtn.disabled = false;
+    divBtn.disabled = false;
+    multiBtn.disabled = false;
+    clearBtn.disabled = false;
+    equalBtn.disabled = false;
+});
+
+offBtn.addEventListener("click", () => {
+    powerOn = false;
+    display.disabled = true;
+    display.value = "";
+
+    numButtons.forEach(b => b.disabled = true);
+    plusBtn.disabled = true;
+    minusBtn.disabled = true;
+    divBtn.disabled = true;
+    multiBtn.disabled = true;
+    clearBtn.disabled = true;
+    equalBtn.disabled = true;
+
+    firstNumber = null;
+    operator = null;
+});
+
+plusBtn.addEventListener("click", () => {
+    if (!powerOn || display.value === "") return;
+    firstNumber = Number(display.value);
+    operator = "+";
+    display.value = "";
+});
+
+equalBtn.addEventListener("click", () => {
+    if (!powerOn || display.value === "") return;
+
+    const secondNumber = Number(display.value);
+
+    if (operator === "+") display.value = firstNumber + secondNumber;
+})
+
+
+
