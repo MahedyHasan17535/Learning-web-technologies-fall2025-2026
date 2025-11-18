@@ -1,0 +1,77 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+#app div {
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+input[type="text"] {
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #2a2a2a;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+button {
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #333;
+    color: #fff;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover:not(:disabled) {
+    background-color: #444;
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+button:first-of-type {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+button:first-of-type:hover:not(:disabled) {
+    background-color: #c9302c;
+}
+
+button:last-of-type {
+    background-color: #5cb85c;
+    color: #fff;
+}
+
+button:last-of-type:hover:not(:disabled) {
+    background-color: #449d44;
+}
+
+button:nth-last-of-type(2) {
+    background-color: #f0ad4e;
+    color: #000;
+}
+
+button:nth-last-of-type(2):hover:not(:disabled) {
+    background-color: #ec971f;
+}
+
+#app div button {
+    margin: 5px 3px;
+}
