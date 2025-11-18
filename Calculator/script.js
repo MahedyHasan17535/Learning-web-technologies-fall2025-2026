@@ -83,7 +83,7 @@ divBtn.style.width = "40px";
 divBtn.style.height = "40px";
 divBtn.style.margin = "2px";
 divBtn.disabled = true;
-divBtn.style.backgroundColor = "gray";
+divBtn.style.backgroundColor = "brown";
 calc.appendChild(divBtn);
 
 const multiBtn = document.createElement("button");
@@ -147,6 +147,17 @@ plusBtn.addEventListener("click", () => {
     operator = "+";
     display.value = "";
 });
+minusBtn.addEventListener("click", () => {
+    if (!powerOn || display.value === "") return;
+    firstNumber = Number(display.value);
+    operator = "-";
+    display.value = "";
+});
+
+clearBtn.addEventListener("click", () => {
+    if (!powerOn) return;
+    display.value = "";
+});
 
 equalBtn.addEventListener("click", () => {
     if (!powerOn || display.value === "") return;
@@ -154,7 +165,8 @@ equalBtn.addEventListener("click", () => {
     const secondNumber = Number(display.value);
 
     if (operator === "+") display.value = firstNumber + secondNumber;
-})
+    else if(operator === "-") display.value = firstNumber - secondNumber;
+});
 
 
 
