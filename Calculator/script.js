@@ -16,12 +16,25 @@ calc.appendChild(display);
 
 let powerOn = false;
 
-const powerBtn = document.createElement("button");
-powerBtn.textContent = "OFF";
-powerBtn.style.width = "100%";
-powerBtn.style.height = "40px";
-powerBtn.style.margin = "5px 0";
-calc.appendChild(powerBtn);
+const onBtn = document.createElement("button");
+onBtn.textContent = "ON";
+onBtn.style.width = "100%";
+onBtn.style.height = "40px";
+onBtn.style.margin = "5px 0";
+onBtn.style.backgroundColor = "green";
+onBtn.style.color = "white";
+calc.appendChild(onBtn);
+
+const offBtn = document.createElement("button");
+offBtn.textContent = "OFF";
+offBtn.style.width = "100%";
+offBtn.style.height = "40px";
+offBtn.style.margin = "5px 0";
+offBtn.style.backgroundColor = "red";
+offBtn.style.color = "white";
+calc.appendChild(offBtn);
+
+
 
 const nums = ["7","8","9","4","5","6","1","2","3","0"];
 const numButtons = [];
@@ -29,9 +42,9 @@ const numButtons = [];
 nums.forEach(n => {
     const btn = document.createElement("button");
     btn.textContent = n;
-    btn.style.width = "45px";
-    btn.style.height = "45px";
-    btn.style.margin = "3px";
+    btn.style.width = "40px";
+    btn.style.height = "40px";
+    btn.style.margin = "2px";
 
     btn.disabled = true;
 
@@ -48,9 +61,53 @@ let operator = null;
 
 const plusBtn = document.createElement("button");
 plusBtn.textContent = "+";
-plusBtn.style.width = "45px";
-plusBtn.style.height = "45px";
-plusBtn.style.margin = "3px";
+plusBtn.style.width = "40px";
+plusBtn.style.height = "40px";
+plusBtn.style.margin = "2px";
 plusBtn.disabled = true;
+plusBtn.style.backgroundColor = "green";
 calc.appendChild(plusBtn);
+
+const minusBtn = document.createElement("button");
+minusBtn.textContent = "-";
+minusBtn.style.width = "40px";
+minusBtn.style.height = "40px";
+minusBtn.style.margin = "2px";
+minusBtn.disabled = true;
+minusBtn.style.backgroundColor = "red";
+calc.appendChild(minusBtn);
+
+const divBtn = document.createElement("button");
+divBtn.textContent = "/";
+divBtn.style.width = "40px";
+divBtn.style.height = "40px";
+divBtn.style.margin = "2px";
+divBtn.disabled = true;
+divBtn.style.backgroundColor = "gray";
+calc.appendChild(divBtn);
+
+const multiBtn = document.createElement("button");
+multiBtn.textContent = "*";
+multiBtn.style.width = "40px";
+multiBtn.style.height = "40px";
+multiBtn.style.margin = "2px";
+multiBtn.disabled = true;
+multiBtn.style.backgroundColor = "yellow";
+calc.appendChild(multiBtn);
+
+const clearBtn = document.createElement("button");
+clearBtn.textContent = "CLEAR";
+clearBtn.style.width = "70px";
+clearBtn.style.height = "45px";
+clearBtn.style.margin = "3px";
+clearBtn.disabled = true;
+calc.appendChild(clearBtn);
+
+const equalBtn = document.createElement("button");
+equalBtn.textContent = "=";
+equalBtn.style.width = "100%";
+equalBtn.style.height = "45px";
+equalBtn.style.margin = "5px 0";
+equalBtn.disabled = true;
+calc.appendChild(equalBtn);
 
