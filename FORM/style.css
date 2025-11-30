@@ -1,0 +1,50 @@
+body {
+    font-family: Arial;
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+}
+#form div {
+    background-color: blanchedalmond;
+    padding: 10px;
+    width: 300px;
+    border-radius: 5px;
+    
+}
+input,select,button {
+    font-size: 20px;
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    border: 1px white;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+button {
+    cursor: pointer;
+    background-color: green;
+    color: white;
+    border: none;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: darkgreen;
+}
+
+.dynamic-field {
+    margin-top: 10px;
+}
+
+.dynamic-field label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 3px;
+}
+#savedData {
+    margin-top: 20px;
+    border-top: 1px green;
+    padding-top: 10px;
+}
