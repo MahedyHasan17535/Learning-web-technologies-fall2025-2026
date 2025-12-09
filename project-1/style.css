@@ -1,0 +1,26 @@
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgb(167, 163, 158);
+    margin: 20px;
+}
+
+table{
+    width: 100%;
+    background-color: antiquewhite;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+th,td{
+    padding: 10px;
+    text-align: center;
+    border: 1px solid black;
+}
+th{
+    background-color: brown;
+    color: black;
+}
+button {
+    background-color: rgb(56, 2, 2);
+    color: rgb(192, 185, 185);
+}
+ADD
