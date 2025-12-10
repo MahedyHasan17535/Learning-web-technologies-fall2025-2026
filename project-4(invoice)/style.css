@@ -1,0 +1,40 @@
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgb(167, 163, 158); /* Light Gray Background */
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: rgb(56, 2, 2); 
+}
+
+table{
+    width: 100%;
+    background-color: antiquewhite;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+th,td{
+    padding: 10px;
+    text-align: center;
+    border: 1px solid black;
+}
+th{
+    background-color: brown; 
+    color: black;
+}
+
+
+fieldset {
+    
+    border: 2px solid brown; 
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+legend {
+    font-weight: bold;
+    color: brown;
+    padding: 0 10px;
+}
