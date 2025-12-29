@@ -2,10 +2,10 @@
     session_start();
 
     // Check if user is logged in (using the session status from your login file)
-    if(!isset($_SESSION['status'])){
-        header('location: login.html');
-        exit();
-    }
+   // if(!isset($_SESSION['status'])){
+     //   header('location: login.html');
+      //  exit();
+ //   }
 
     // Handling the "Add Medicine" Form Submission
     if(isset($_POST['submit'])){

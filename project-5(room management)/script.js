@@ -1,142 +1,104 @@
-const roomTable = document.querySelector("table");
-const roomForm = document.querySelector("form");
-
-function isAllDigits(str) {
+function isValidRoomNo(str) {
     if (str.length === 0) return false;
     for (var i = 0; i < str.length; i++) {
         var ch = str.charAt(i);
-        if (ch < "0" || ch > "9") return false;
+        if (ch < '0' || ch > '9') return false;
+    }
+    return true;
+}
+
+function isValidText(str) {
+    if (str.length === 0) return false;
+    for (var i = 0; i < str.length; i++) {
+        var ch = str.charAt(i);
+        var isLetter = (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
+        var isDigit = (ch >= '0' && ch <= '9');
+        var isSpace = (ch === ' ');
+        if (!isLetter && !isDigit && !isSpace) return false;
     }
     return true;
 }
 
 function isFloatOrInt(str) {
-    if (typeof str != "string") return false;
-    return !isNaN(parseFloat(str));
+    if (str.length === 0) return false;
+    var cleanStr = str.replace('tk', '').trim();
+    return !isNaN(parseFloat(cleanStr));
 }
 
-function initiateEdit(row) {
-    for (let i = 0; i <= 5; i++) {
-        const cell = row.cells[i];
-        if (cell.querySelector("input")) continue;
-
-        const currentText = cell.textContent.trim().replace("tk", "");
-        const input = document.createElement("input");
-
-        input.type = "text";
-        input.value = currentText;
-        input.style.width = "90%";
-
-        cell.innerHTML = "";
-        cell.appendChild(input);
-    }
-
-    const editBtn = Array.from(row.querySelectorAll("button")).find(b => b.textContent.toUpperCase() === "EDIT");
-    if (editBtn) {
-        editBtn.textContent = "SAVE";
-        editBtn.classList.remove("edit");
-        editBtn.classList.add("save");
+function showError(id, msg) {
+    var el = document.getElementById(id);
+    if (el) {
+        el.textContent = msg;
+        el.style.color = "red";
+        el.style.fontSize = "12px";
     }
 }
 
-function saveEdit(row) {
-    let isValid = true;
-    let errorMessage = "Validation Errors Encountered:\n\n";
-    let errorCount = 0;
-
-    for (let i = 0; i <= 5; i++) {
-        const cell = row.cells[i];
-        const input = cell.querySelector("input");
-        if (!input) continue;
-
-        let value = input.value.trim();
-        const headerText = roomTable.rows[0].cells[i].textContent;
-        let fieldError = "";
-
-        if (value === "" && i !== 5) {
-            fieldError = `${headerText} field is "required" and cannot be blank.`;
-        }
-        else if (i === 3 && !isFloatOrInt(value.replace("tk", ""))) {
-            fieldError = `${headerText} must be a valid number.`;
-        }
-        else if (i === 0 && !isAllDigits(value)) {
-            fieldError = `${headerText} must contain only digits.`;
-        }
-
-        if (fieldError !== "") {
-            isValid = false;
-            errorCount++;
-            errorMessage += `${errorCount}. ${fieldError}\n`;
-            input.style.border = "2px solid red";
-        } else {
-            input.style.border = "1px solid #ccc";
-        }
-    }
-
-    if (!isValid) {
-        alert(errorMessage);
-        return;
-    }
-
-    for (let i = 0; i <= 5; i++) {
-        const cell = row.cells[i];
-        const input = cell.querySelector("input");
-        if (input) {
-            let finalValue = input.value.trim();
-            if (i === 3 && finalValue !== "") {
-                finalValue += " tk";
-            }
-            cell.textContent = finalValue;
-        }
-    }
-
-    const saveBtn = Array.from(row.querySelectorAll("button")).find(b => b.textContent.toUpperCase() === "SAVE");
-    if (saveBtn) {
-        saveBtn.textContent = "Edit";
-        saveBtn.classList.remove("save");
-        saveBtn.classList.add("edit");
-    }
-    alert("Data saved successfully!");
+function clearError(id) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = '';
 }
 
-function deleteRow(row) {
-    const roomNo = row.cells[0].textContent;
-    if (confirm(`Action: Are you sure you want to DELETE Room ${roomNo}?`)) {
-        row.remove();
-        alert(`SUCCESS: Room ${roomNo} has been deleted.`);
+function validateRoomNoBlur() {
+    var val = document.getElementsByName('room_no')[0].value.trim();
+    if (!val) { showError('room-no-error', 'Room number is required'); return false; }
+    if (!isValidRoomNo(val)) { showError('room-no-error', 'Must contain only digits'); return false; }
+    clearError('room-no-error');
+    return true;
+}
+
+function validateRoomTypeBlur() {
+    var val = document.getElementsByName('room_type')[0].value;
+    if (!val) { showError('room-type-error', 'Please select a room type'); return false; }
+    clearError('room-type-error');
+    return true;
+}
+
+function validateFloorBlur() {
+    var val = document.getElementsByName('floor')[0].value.trim();
+    if (!val) { showError('floor-error', 'Floor is required'); return false; }
+    clearError('floor-error');
+    return true;
+}
+
+function validatePriceBlur() {
+    var val = document.getElementsByName('price')[0].value.trim();
+    if (!val) { showError('price-error', 'Price is required'); return false; }
+    if (!isFloatOrInt(val)) { showError('price-error', 'Must be a valid number'); return false; }
+    clearError('price-error');
+    return true;
+}
+
+function validateStatusBlur() {
+    var val = document.getElementsByName('status')[0].value;
+    if (!val) { showError('status-error', 'Please select a status'); return false; }
+    clearError('status-error');
+    return true;
+}
+
+function validatePatientBlur() {
+    var val = document.getElementsByName('patient_name')[0].value.trim();
+    if (val.length > 0 && !isValidText(val)) { 
+        showError('patient-error', 'Invalid characters in name'); 
+        return false; 
     }
+    clearError('patient-error');
+    return true;
 }
 
-function handleTableAction(event) {
-    const target = event.target;
-    if (target.tagName !== "BUTTON") return;
+function validateRoom() {
+    var isRoomNoValid = validateRoomNoBlur();
+    var isTypeValid = validateRoomTypeBlur();
+    var isFloorValid = validateFloorBlur();
+    var isPriceValid = validatePriceBlur();
+    var isStatusValid = validateStatusBlur();
+    var isPatientValid = validatePatientBlur();
 
-    const row = target.closest("tr");
-    const action = target.textContent.toUpperCase();
+    var finalResult = isRoomNoValid && isTypeValid && isFloorValid && isPriceValid && isStatusValid && isPatientValid;
 
-    if (action === "EDIT") {
-        initiateEdit(row);
-    } else if (action === "SAVE") {
-        saveEdit(row);
-    } else if (action === "DELETE") {
-        deleteRow(row);
-    } else if (action === "ASSIGN PATIENT") {
-        const name = prompt("Enter Patient Name:");
-        if (name) {
-            row.cells[5].textContent = name;
-            row.cells[4].textContent = "Occupied";
-        }
+    if (finalResult) {
+        alert("Form validated successfully!");
     }
+    
+    return finalResult;
 }
-
-if (roomTable) {
-    roomTable.addEventListener("click", handleTableAction);
-}
-
-if (roomForm) {
-    roomForm.addEventListener("submit", function(e) {
-        e.preventDefault();
-        alert("New room entry submitted.");
-    });
-}
-
