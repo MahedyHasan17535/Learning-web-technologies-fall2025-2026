@@ -3,6 +3,7 @@ require_once('../controller/adminCheck.php');
 require_once('../model/roomModel.php');
 
 $rooms = getAllRooms();
+$activeList = getActiveRoomAssignments();
 ?>
 
 <html>
@@ -66,6 +67,7 @@ $rooms = getAllRooms();
                             <td>
                                 <a href="room_view.php?id=<?php echo $room['id']; ?>"><button>View</button></a>
                                 <a href="room_edit.php?id=<?php echo $room['id']; ?>"><button>Edit</button></a>
+                                <a href="patient_room_assign.php?id=<?php echo $room['id']; ?>"><button>Assign</button></a>
                                 <a href="../controller/delete_room.php?id=<?php echo $room['id']; ?>"
                                     onclick="return confirm('Are you sure?');"><button>Delete</button></a>
                             </td>
@@ -74,6 +76,44 @@ $rooms = getAllRooms();
                 <?php endif; ?>
             </table>
         </fieldset>
+
+        <br><br>
+
+       <fieldset>
+    <legend><h3>Active Room Assignments</h3></legend>
+    <table border="1" width="100%" style="border-collapse: collapse;">
+        <thead>
+            <tr bgcolor="#f2f2f2">
+                <th>Room No</th>
+                <th>Patient ID</th>
+                <th>Admission Date</th>
+                <th>Expected Discharge</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if(count($activeList) > 0): ?>
+                <?php foreach($activeList as $row): ?>
+                    <tr>
+                        <td><?php echo $row['room_number']; ?></td>
+                        <td><?php echo $row['user_id']; ?></td>
+                        <td><?php echo $row['admission_date']; ?></td>
+                        <td><?php echo ($row['expected_discharge_date'] == '0000-00-00') ? 'N/A' : $row['expected_discharge_date']; ?></td>
+                        <td>
+                            <a href="../controller/discharge_controller.php?id=<?php echo $row['assignment_id']; ?>">
+                                <button type="button">Discharge</button>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="5" align="center">No active assignments found (Check if discharge_date is NULL in DB).</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</fieldset>
     </div>
 </body>
 

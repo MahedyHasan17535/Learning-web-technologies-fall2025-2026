@@ -29,6 +29,43 @@ function getAllRooms()
 
     return $rooms;
 }
+function dischargePatient($assignment_id) {
+    $con = getConnection();
+    $today = date('Y-m-d');
+
+    $sql1 = "UPDATE room_assignments SET discharge_date = '{$today}' WHERE id = '{$assignment_id}'";
+    
+    if (mysqli_query($con, $sql1)) {
+        $res = mysqli_query($con, "SELECT room_id FROM room_assignments WHERE id = '{$assignment_id}'");
+        $data = mysqli_fetch_assoc($res);
+        $room_id = $data['room_id'];
+
+      
+        $sql2 = "UPDATE rooms SET status = 'Available' WHERE id = '{$room_id}'";
+        return mysqli_query($con, $sql2);
+    }
+    
+    return false;
+}
+
+function getActiveRoomAssignments()
+{
+    $con = getConnection();
+    $sql = "SELECT ra.id as assignment_id, r.room_number, p.name as patient_name, ra.admission_date, ra.expected_discharge_date 
+            FROM room_assignments ra 
+            JOIN rooms r ON ra.room_id = r.id
+            JOIN patients p ON ra.patient_id = p.user_id 
+            WHERE ra.discharge_date IS NULL"; 
+            
+    $result = mysqli_query($con, $sql);
+    $assignments = [];
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $assignments[] = $row;
+        }
+    }
+    return $assignments;
+}
 function getAllPatients()
 {
     $con = getConnection();
