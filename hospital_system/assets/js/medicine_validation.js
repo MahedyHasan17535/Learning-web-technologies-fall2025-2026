@@ -1,9 +1,8 @@
-// --- Helper Functions (Your Requested Format) ---
+
 function isValidMedicineText(str) {
     if (str.length === 0) return false;
     for (var i = 0; i < str.length; i++) {
         var ch = str.charAt(i);
-        // Checking if character is a letter or space
         var isLetter = (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
         var isSpace = (ch === ' ');
         if (!isLetter && !isSpace) return false;
@@ -20,7 +19,6 @@ function isAllDigits(str) {
     return true;
 }
 
-// Corrected showError to work with your table structure
 function showError(field, msg) {
     clearError(field);
     var span = document.createElement("span");
@@ -29,8 +27,6 @@ function showError(field, msg) {
     span.style.color = "red";
     span.style.fontSize = "12px";
     span.style.display = "block";
-    
-    // In your file, parentNode is the <td>. This puts the error below the input.
     field.parentNode.appendChild(span);
     field.style.borderColor = "red";
 }
@@ -42,7 +38,7 @@ function clearError(field) {
     field.style.borderColor = "";
 }
 
-// --- Blur Functions matching your medicine_add.php ---
+
 
 function validateMedicineName(field) {
     var val = field.value.trim();
@@ -97,11 +93,9 @@ function validateExpiryDate(field) {
     return true;
 }
 
-// --- Main Form Submission Function ---
 function validateMedicineForm(form) {
     var valid = true;
 
-    // We use form.elements['name'] to grab the fields based on your HTML "name" attributes
     if (!validateMedicineName(form.elements['medicine_name'])) valid = false;
     if (!validateGenericName(form.elements['generic_name'])) valid = false;
     if (!validateCategory(form.elements['category'])) valid = false;

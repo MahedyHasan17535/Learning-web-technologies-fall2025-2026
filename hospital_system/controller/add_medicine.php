@@ -17,7 +17,6 @@ if (isset($_POST['submit'])) {
     if (empty($medicine_name) || empty($generic_name) || empty($category) || 
         empty($manufacturer) || empty($unit_price) || empty($expiry_date)) {
         
-        // Instead of echo, we redirect back so no new page stays open
         header('location: ../view/medicine_add.php?error=empty_fields');
         exit(); 
     } 

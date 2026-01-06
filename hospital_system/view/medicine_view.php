@@ -2,7 +2,6 @@
 require_once('../controller/adminCheck.php');
 require_once('../model/medicineModel.php');
 
-// Get medicine ID from the URL
 if (!isset($_GET['id'])) {
     header('location: medicine_list.php');
     exit();
@@ -10,7 +9,6 @@ if (!isset($_GET['id'])) {
 
 $medicine = getMedicineById($_GET['id']);
 
-// If no medicine is found with that ID, redirect back
 if (!$medicine) {
     header('location: medicine_list.php');
     exit();

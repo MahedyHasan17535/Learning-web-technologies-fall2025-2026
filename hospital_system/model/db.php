@@ -2,7 +2,7 @@
 function getConnection() {
     $host = "localhost";
     $dbuser = "root";
-    $dbpass = ""; // Default for XAMPP
+    $dbpass = ""; 
     $dbname = "hospital_db";
 
     $con = mysqli_connect($host, $dbuser, $dbpass, $dbname);
